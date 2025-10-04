@@ -270,7 +270,6 @@ const CodeAnalyzer = () => {
             </Card>
           </TabsContent>
         </Tabs>
-      </div>
     </div>
   );
 };
