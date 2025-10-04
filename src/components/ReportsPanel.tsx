@@ -63,21 +63,21 @@ const ReportsPanel = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-[#0a0e1a] p-4 rounded border border-[#00FF41]/20">
-              <div className="text-2xl font-bold text-[#00FF41]">{mockReport.totalChecks}</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <div className="bg-[#0a0e1a] p-3 md:p-4 rounded border border-[#00FF41]/20">
+              <div className="text-xl md:text-2xl font-bold text-[#00FF41]">{mockReport.totalChecks}</div>
               <div className="text-xs text-[#00FFFF]">Всего проверок</div>
             </div>
-            <div className="bg-[#0a0e1a] p-4 rounded border border-[#00FF41]/20">
-              <div className="text-2xl font-bold text-[#FF6B6B]">{mockReport.criticalErrors}</div>
+            <div className="bg-[#0a0e1a] p-3 md:p-4 rounded border border-[#00FF41]/20">
+              <div className="text-xl md:text-2xl font-bold text-[#FF6B6B]">{mockReport.criticalErrors}</div>
               <div className="text-xs text-[#00FFFF]">Критических ошибок</div>
             </div>
-            <div className="bg-[#0a0e1a] p-4 rounded border border-[#00FF41]/20">
-              <div className="text-2xl font-bold text-[#FFA500]">{mockReport.warnings}</div>
+            <div className="bg-[#0a0e1a] p-3 md:p-4 rounded border border-[#00FF41]/20">
+              <div className="text-xl md:text-2xl font-bold text-[#FFA500]">{mockReport.warnings}</div>
               <div className="text-xs text-[#00FFFF]">Предупреждений</div>
             </div>
-            <div className="bg-[#0a0e1a] p-4 rounded border border-[#00FF41]/20">
-              <div className="text-2xl font-bold text-[#4ECDC4]">{mockReport.suggestions}</div>
+            <div className="bg-[#0a0e1a] p-3 md:p-4 rounded border border-[#00FF41]/20">
+              <div className="text-xl md:text-2xl font-bold text-[#4ECDC4]">{mockReport.suggestions}</div>
               <div className="text-xs text-[#00FFFF]">Рекомендаций</div>
             </div>
           </div>
@@ -92,19 +92,19 @@ const ReportsPanel = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ScrollArea className="h-[600px] pr-4">
-            <div className="space-y-6">
+          <ScrollArea className="h-[500px] md:h-[600px] pr-2 md:pr-4">
+            <div className="space-y-4 md:space-y-6">
               {detailedAnalysis.map((analysis, idx) => (
                 <div key={idx}>
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-lg font-semibold text-[#00FF41]">{analysis.model}</h3>
-                    <Badge variant="outline" className="text-[#00FFFF] border-[#00FFFF]">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3">
+                    <h3 className="text-base md:text-lg font-semibold text-[#00FF41]">{analysis.model}</h3>
+                    <Badge variant="outline" className="text-[#00FFFF] border-[#00FFFF] w-fit">
                       {analysis.checks} проверки
                     </Badge>
                   </div>
                   
-                  <div className="bg-[#0a0e1a] p-4 rounded border border-[#00FF41]/20 mb-4">
-                    <p className="text-sm text-[#00FFFF] leading-relaxed">
+                  <div className="bg-[#0a0e1a] p-3 md:p-4 rounded border border-[#00FF41]/20 mb-3 md:mb-4">
+                    <p className="text-xs md:text-sm text-[#00FFFF] leading-relaxed break-words">
                       {analysis.findings}
                     </p>
                   </div>

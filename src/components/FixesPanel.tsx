@@ -123,15 +123,15 @@ const FixesPanel = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex gap-3">
-              <Badge variant="outline" className="text-[#FF6B6B] border-[#FF6B6B]">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 mb-4 md:mb-6">
+            <div className="flex flex-wrap gap-2 md:gap-3">
+              <Badge variant="outline" className="text-[#FF6B6B] border-[#FF6B6B] text-xs">
                 {errorCount} ошибок
               </Badge>
-              <Badge variant="outline" className="text-[#FFA500] border-[#FFA500]">
+              <Badge variant="outline" className="text-[#FFA500] border-[#FFA500] text-xs">
                 {warningCount} предупреждений
               </Badge>
-              <Badge variant="outline" className="text-[#00FFFF] border-[#00FFFF]">
+              <Badge variant="outline" className="text-[#00FFFF] border-[#00FFFF] text-xs">
                 {selectedCount} выбрано
               </Badge>
             </div>
@@ -140,7 +140,7 @@ const FixesPanel = () => {
                 variant="outline"
                 size="sm"
                 onClick={selectAll}
-                className="text-[#00FF41] border-[#00FF41]"
+                className="text-[#00FF41] border-[#00FF41] flex-1 md:flex-none text-xs"
               >
                 Выбрать все
               </Button>
@@ -148,35 +148,35 @@ const FixesPanel = () => {
                 variant="outline"
                 size="sm"
                 onClick={deselectAll}
-                className="text-[#00FFFF] border-[#00FFFF]"
+                className="text-[#00FFFF] border-[#00FFFF] flex-1 md:flex-none text-xs"
               >
                 Снять все
               </Button>
             </div>
           </div>
 
-          <ScrollArea className="h-[500px] pr-4">
+          <ScrollArea className="h-[400px] md:h-[500px] pr-2 md:pr-4">
             <div className="space-y-4">
               {fixes.map((fix) => (
                 <div
                   key={fix.id}
-                  className={`p-4 rounded border-2 ${
+                  className={`p-3 md:p-4 rounded border-2 ${
                     fix.selected 
                       ? 'border-[#00FF41] bg-[#00FF41]/5' 
                       : 'border-[#00FF41]/20 bg-[#0a0e1a]'
                   }`}
                 >
-                  <div className="flex items-start gap-3 mb-3">
+                  <div className="flex items-start gap-2 md:gap-3 mb-3">
                     <Checkbox
                       checked={fix.selected}
                       onCheckedChange={() => toggleFix(fix.id)}
-                      className="mt-1"
+                      className="mt-1 flex-shrink-0"
                     />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
                         <Badge 
                           variant="outline"
-                          className={`${
+                          className={`text-xs ${
                             fix.type === 'error' 
                               ? 'text-[#FF6B6B] border-[#FF6B6B]' 
                               : fix.type === 'warning'
@@ -186,36 +186,36 @@ const FixesPanel = () => {
                         >
                           {fix.type.toUpperCase()}
                         </Badge>
-                        <Badge variant="outline" className="text-[#00FFFF] border-[#00FFFF]">
-                          Строка {fix.line}
+                        <Badge variant="outline" className="text-[#00FFFF] border-[#00FFFF] text-xs">
+                          L:{fix.line}
                         </Badge>
                         {fix.verified && (
-                          <Badge variant="outline" className="text-[#00FF41] border-[#00FF41]">
+                          <Badge variant="outline" className="text-[#00FF41] border-[#00FF41] text-xs hidden md:flex">
                             <Icon name="CheckCircle2" className="w-3 h-3 mr-1" />
                             Проверено
                           </Badge>
                         )}
-                        <Badge variant="outline" className="text-[#00FFFF]/60 border-[#00FFFF]/30">
+                        <Badge variant="outline" className="text-[#00FFFF]/60 border-[#00FFFF]/30 text-xs hidden md:inline-flex">
                           {fix.aiModel}
                         </Badge>
                       </div>
-                      <h4 className="text-[#00FF41] font-semibold mb-3">{fix.title}</h4>
+                      <h4 className="text-[#00FF41] font-semibold mb-2 md:mb-3 text-sm md:text-base break-words">{fix.title}</h4>
                       
                       <div className="space-y-2">
-                        <div className="bg-[#0a0e1a] p-3 rounded border border-[#FF6B6B]/30">
+                        <div className="bg-[#0a0e1a] p-2 md:p-3 rounded border border-[#FF6B6B]/30">
                           <div className="flex items-center gap-2 mb-1">
-                            <Icon name="X" className="w-4 h-4 text-[#FF6B6B]" />
+                            <Icon name="X" className="w-3 h-3 md:w-4 md:h-4 text-[#FF6B6B] flex-shrink-0" />
                             <span className="text-xs text-[#FF6B6B]">Текущий код:</span>
                           </div>
-                          <code className="text-sm text-[#00FF41] font-mono">{fix.current}</code>
+                          <code className="text-xs md:text-sm text-[#00FF41] font-mono break-all">{fix.current}</code>
                         </div>
                         
-                        <div className="bg-[#0a0e1a] p-3 rounded border border-[#00FF41]/30">
+                        <div className="bg-[#0a0e1a] p-2 md:p-3 rounded border border-[#00FF41]/30">
                           <div className="flex items-center gap-2 mb-1">
-                            <Icon name="Check" className="w-4 h-4 text-[#00FF41]" />
+                            <Icon name="Check" className="w-3 h-3 md:w-4 md:h-4 text-[#00FF41] flex-shrink-0" />
                             <span className="text-xs text-[#00FF41]">Предлагаемое исправление:</span>
                           </div>
-                          <code className="text-sm text-[#00FFFF] font-mono">{fix.proposed}</code>
+                          <code className="text-xs md:text-sm text-[#00FFFF] font-mono break-all">{fix.proposed}</code>
                         </div>
                       </div>
                     </div>
@@ -228,11 +228,11 @@ const FixesPanel = () => {
       </Card>
 
       <Card className="bg-[#0d1117] border-[#00FF41]/30">
-        <CardContent className="pt-6">
-          <div className="flex items-center justify-between mb-4">
+        <CardContent className="pt-4 md:pt-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
             <div className="flex items-center gap-2">
-              <Icon name="Info" className="w-5 h-5 text-[#00FFFF]" />
-              <span className="text-[#00FFFF]">
+              <Icon name="Info" className="w-4 h-4 md:w-5 md:h-5 text-[#00FFFF] flex-shrink-0" />
+              <span className="text-[#00FFFF] text-sm md:text-base">
                 {selectedCount > 0 
                   ? `Готово к применению ${selectedCount} исправлений` 
                   : "Выберите исправления для применения"}
@@ -241,7 +241,7 @@ const FixesPanel = () => {
             <Button
               onClick={applyFixes}
               disabled={fixing || selectedCount === 0}
-              className="bg-[#00FF41] text-[#0a0e1a] hover:bg-[#00FF41]/80"
+              className="bg-[#00FF41] text-[#0a0e1a] hover:bg-[#00FF41]/80 w-full md:w-auto text-sm md:text-base"
             >
               {fixing ? (
                 <>

@@ -124,39 +124,34 @@ const CodeAnalyzer = () => {
   const selectedCount = results.reduce((acc, r) => acc + r.issues.filter(i => i.selected).length, 0);
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8 border-b border-[#00FF41] pb-4">
-          <h1 className="text-3xl md:text-4xl font-bold terminal-glow mb-2">
-            {'>'} CODE ANALYZER AI
-          </h1>
-          <p className="text-[#4ECDC4] text-sm">Мультиагентная система анализа кода</p>
-        </div>
-
-        <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-4">
-          <TabsList className="bg-[#1A1F2C] border border-[#00FF41]">
-            <TabsTrigger value="editor" className="data-[state=active]:bg-[#00FF41] data-[state=active]:text-black">
-              <Icon name="Code" className="w-4 h-4 mr-2" />
-              Редактор
+    <div className="space-y-4">
+      <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-4">
+        <div className="overflow-x-auto -mx-2 px-2">
+          <TabsList className="bg-[#1A1F2C] border border-[#00FF41] inline-flex min-w-max">
+            <TabsTrigger value="editor" className="data-[state=active]:bg-[#00FF41] data-[state=active]:text-black text-xs md:text-sm px-3 md:px-4">
+              <Icon name="Code" className="w-4 h-4 md:mr-2" />
+              <span className="hidden md:inline">Редактор</span>
             </TabsTrigger>
-            <TabsTrigger value="analysis" className="data-[state=active]:bg-[#00FF41] data-[state=active]:text-black">
-              <Icon name="Activity" className="w-4 h-4 mr-2" />
-              Анализ ({totalIssues})
+            <TabsTrigger value="analysis" className="data-[state=active]:bg-[#00FF41] data-[state=active]:text-black text-xs md:text-sm px-3 md:px-4">
+              <Icon name="Activity" className="w-4 h-4 md:mr-2" />
+              <span className="hidden md:inline">Анализ ({totalIssues})</span>
+              <span className="md:hidden">({totalIssues})</span>
             </TabsTrigger>
-            <TabsTrigger value="history" className="data-[state=active]:bg-[#00FF41] data-[state=active]:text-black">
-              <Icon name="History" className="w-4 h-4 mr-2" />
-              История
+            <TabsTrigger value="history" className="data-[state=active]:bg-[#00FF41] data-[state=active]:text-black text-xs md:text-sm px-3 md:px-4">
+              <Icon name="History" className="w-4 h-4 md:mr-2" />
+              <span className="hidden md:inline">История</span>
             </TabsTrigger>
           </TabsList>
+        </div>
 
           <TabsContent value="editor" className="space-y-4">
-            <Card className="bg-[#1A1F2C] border-[#00FF41] p-6">
-              <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-xl font-semibold text-[#00FF41]">{'>'} Код для анализа</h2>
+            <Card className="bg-[#1A1F2C] border-[#00FF41] p-3 md:p-6">
+              <div className="mb-3 md:mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <h2 className="text-base md:text-xl font-semibold text-[#00FF41]">{'>'} Код для анализа</h2>
                 <Button 
                   onClick={simulateAnalysis} 
                   disabled={analyzing}
-                  className="bg-[#00FF41] text-black hover:bg-[#00DD33]"
+                  className="bg-[#00FF41] text-black hover:bg-[#00DD33] w-full md:w-auto text-sm md:text-base py-2.5 md:py-2"
                 >
                   {analyzing ? (
                     <>
@@ -174,7 +169,7 @@ const CodeAnalyzer = () => {
               <Textarea
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="min-h-[400px] font-mono text-sm bg-[#0a0e1a] border-[#00FF41] text-[#00FF41] focus:ring-[#00FF41]"
+                className="min-h-[300px] md:min-h-[400px] font-mono text-xs md:text-sm bg-[#0a0e1a] border-[#00FF41] text-[#00FF41] focus:ring-[#00FF41]"
                 placeholder="Вставьте код для анализа..."
               />
             </Card>
@@ -188,38 +183,40 @@ const CodeAnalyzer = () => {
               </Card>
             ) : (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                  {ANALYZERS.map((analyzer, idx) => {
-                    const result = results.find(r => r.id === analyzer.id);
-                    return (
-                      <Card key={analyzer.id} className="bg-[#1A1F2C] border-[#00FF41] p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Icon name={analyzer.icon as any} className="w-5 h-5 text-[#00FF41]" />
-                          <h3 className="text-sm font-semibold text-[#00FF41]">{analyzer.name}</h3>
-                        </div>
-                        {result?.status === 'analyzing' && (
-                          <div className="flex items-center gap-2">
-                            <Icon name="Loader2" className="w-4 h-4 animate-spin text-[#4ECDC4]" />
-                            <span className="text-xs text-[#4ECDC4]">Проверка {idx + 1}/3...</span>
+                <div className="overflow-x-auto -mx-2 md:mx-0">
+                  <div className="flex md:grid md:grid-cols-5 gap-3 md:gap-4 px-2 md:px-0 pb-2 md:pb-0 min-w-max md:min-w-0">
+                    {ANALYZERS.map((analyzer, idx) => {
+                      const result = results.find(r => r.id === analyzer.id);
+                      return (
+                        <Card key={analyzer.id} className="bg-[#1A1F2C] border-[#00FF41] p-3 md:p-4 min-w-[200px] md:min-w-0">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Icon name={analyzer.icon as any} className="w-4 h-4 md:w-5 md:h-5 text-[#00FF41] flex-shrink-0" />
+                            <h3 className="text-xs md:text-sm font-semibold text-[#00FF41]">{analyzer.name}</h3>
                           </div>
-                        )}
-                        {result?.status === 'complete' && (
-                          <p className="text-xs text-[#4ECDC4]">{result.issues.length} проблем</p>
-                        )}
-                      </Card>
-                    );
-                  })}
+                          {result?.status === 'analyzing' && (
+                            <div className="flex items-center gap-2">
+                              <Icon name="Loader2" className="w-4 h-4 animate-spin text-[#4ECDC4]" />
+                              <span className="text-xs text-[#4ECDC4]">Проверка {idx + 1}/3...</span>
+                            </div>
+                          )}
+                          {result?.status === 'complete' && (
+                            <p className="text-xs text-[#4ECDC4]">{result.issues.length} проблем</p>
+                          )}
+                        </Card>
+                      );
+                    })}
+                  </div>
                 </div>
 
-                <Card className="bg-[#1A1F2C] border-[#00FF41] p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-semibold text-[#00FF41]">
+                <Card className="bg-[#1A1F2C] border-[#00FF41] p-3 md:p-6">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4 md:mb-6">
+                    <h2 className="text-base md:text-xl font-semibold text-[#00FF41]">
                       {'>'} Найденные проблемы ({selectedCount}/{totalIssues} выбрано)
                     </h2>
                     <Button 
                       onClick={fixSelectedIssues}
                       disabled={selectedCount === 0}
-                      className="bg-[#00FF41] text-black hover:bg-[#00DD33]"
+                      className="bg-[#00FF41] text-black hover:bg-[#00DD33] w-full md:w-auto text-sm md:text-base"
                     >
                       <Icon name="Wrench" className="w-4 h-4 mr-2" />
                       Исправить выбранные
@@ -232,16 +229,16 @@ const CodeAnalyzer = () => {
                         {result.issues.map(issue => (
                           <div 
                             key={issue.id} 
-                            className="flex items-start gap-4 p-4 bg-[#0a0e1a] border border-[#00FF41]/30 rounded"
+                            className="flex items-start gap-3 md:gap-4 p-3 md:p-4 bg-[#0a0e1a] border border-[#00FF41]/30 rounded"
                           >
                             <Checkbox
                               checked={issue.selected}
                               onCheckedChange={() => toggleIssue(result.id, issue.id)}
-                              className="mt-1"
+                              className="mt-1 flex-shrink-0"
                             />
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className={`text-xs px-2 py-1 rounded ${
+                            <div className="flex-1 min-w-0">
+                              <div className="flex flex-wrap items-center gap-2 mb-2">
+                                <span className={`text-xs px-2 py-1 rounded whitespace-nowrap ${
                                   issue.severity === 'error' ? 'bg-[#FF6B6B] text-white' :
                                   issue.severity === 'warning' ? 'bg-[#FFA500] text-black' :
                                   'bg-[#4ECDC4] text-black'
@@ -250,9 +247,9 @@ const CodeAnalyzer = () => {
                                 </span>
                                 <span className="text-xs text-[#4ECDC4]">Строка {issue.line}</span>
                               </div>
-                              <p className="text-[#00FF41] mb-2">{issue.message}</p>
-                              <p className="text-sm text-[#4ECDC4]">
-                                <Icon name="Lightbulb" className="w-4 h-4 inline mr-1" />
+                              <p className="text-[#00FF41] mb-2 text-sm md:text-base break-words">{issue.message}</p>
+                              <p className="text-xs md:text-sm text-[#4ECDC4] break-words">
+                                <Icon name="Lightbulb" className="w-4 h-4 inline mr-1 flex-shrink-0" />
                                 {issue.suggestion}
                               </p>
                             </div>
